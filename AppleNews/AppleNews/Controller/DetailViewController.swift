@@ -10,17 +10,32 @@ import UIKit
 class DetailViewController: UIViewController {
     
     var article: Article?
+    let gradientLayer = CAGradientLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        gradientBackground()
 
         // Do any additional setup after loading the view.
     }
     
+    func gradientBackground() {
+        setGradientBackgroundColor()
+        gradientLayer.frame = view.bounds
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func setGradientBackgroundColor() {
+        if traitCollection.userInterfaceStyle == .dark {
+            gradientLayer.colors = [UIColor.darkGray.cgColor, UIColor.black.cgColor]
+        } else {
+            gradientLayer.colors = [UIColor.white.cgColor, UIColor.gray.cgColor]
+        }
+    }
+    
     private func setupView() {
         view.backgroundColor = UIColor.systemBackground
-        let containerView = UIView()
         let vstack = UIStackView()
         let title = UILabel()
         let source = UILabel()
@@ -75,6 +90,11 @@ class DetailViewController: UIViewController {
         author.text = "Author:\n\t \(article?.author ?? "")"
         content.text = "Content:\n\t \(article?.content ?? "")"
         source.text = "Source:\n\t \(article?.source?.name ?? "")"
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setGradientBackgroundColor()
     }
     
 

@@ -17,7 +17,6 @@ class NewsFeedController: UITableViewController {
         super.viewDidLoad()
         setupView()
         getNewsData()
-        updateBackgroundColor()
     }
     
     private func setupView() {
